@@ -12,6 +12,7 @@ export function transpile(source, { filePath = '<stdin>' } = {}) {
   js = transformEnum(js);
   js = transformSwitch(js);
   js = transformUnless(js);
+  js = transformGuard(js);
   js = transformPipeline(js);
   js = transformClasses(js);
   js = transformInlineFnReturn(js);
@@ -86,13 +87,13 @@ function extractDirectives(source) {
 
     let m = trimmed.match(/^use\s+"([^"]+)"(?:\s+as\s+(\w+))?/);
     if (m) {
-      const spec = m[1];
-      const alias = m[2] || defaultAlias(spec);
-      imports.push({
-        spec,
-        alias,
-        js: `const ${alias} = await __krs.import(${JSON.stringify(spec)});`,
-      });
+      pushImport(imports, m[1], m[2]);
+      continue;
+    }
+
+    m = trimmed.match(/^use\s+stdlib\.(\w+)(?:\s+as\s+(\w+))?/);
+    if (m) {
+      pushImport(imports, `@stdlib/${m[1]}.krs`, m[2]);
       continue;
     }
 
@@ -126,6 +127,15 @@ function extractDirectives(source) {
   return { body: bodyLines.join('\n'), imports, exports };
 }
 
+function pushImport(imports, spec, aliasOverride) {
+  const alias = aliasOverride || defaultAlias(spec);
+  imports.push({
+    spec,
+    alias,
+    js: `const ${alias} = await __krs.import(${JSON.stringify(spec)});`,
+  });
+}
+
 function defaultAlias(spec) {
   if (spec.startsWith('krs:')) return spec.slice(4);
   const base = spec.split('/').pop().replace(/\.krs$/, '');
@@ -134,6 +144,7 @@ function defaultAlias(spec) {
     http: 'http', fs: 'fs', utils: 'utils', path: 'path',
     crypto: 'crypto', math: 'math', string: 'string', array: 'array',
     colors: 'colors', process: 'process', test: 'test', cli: 'cli', db: 'db',
+    regex: 'regex', result: 'result',
   };
   for (const [k, v] of Object.entries(stdMap)) {
     if (spec.includes(`stdlib/${k}`)) return v;
@@ -176,6 +187,17 @@ function transformUnless(code) {
   ).replace(
     /^(\s*)unless\s+(.+?)\s+then\s+(.+)$/gm,
     '$1if (!($2)) { $3',
+  );
+}
+
+function transformGuard(code) {
+  // guard condition else return value end
+  return code.replace(
+    /^(\s*)guard\s+(.+?)\s+else\s+return\s+(.+?)\s+end\s*$/gm,
+    '$1if (!($2)) { return $3; }',
+  ).replace(
+    /^(\s*)guard\s+(.+?)\s+else\s*$/gm,
+    '$1if (!($2)) {',
   );
 }
 
@@ -234,6 +256,9 @@ function transformControlFlow(code) {
 function transformLoops(code) {
   code = code.replace(/^(\s*)for\s+each\s+(\w+)\s+in\s+(.+?)\s*$/gm, '$1for (const $2 of $3) {');
   code = code.replace(/^(\s*)while\s+(.+?)\s*$/gm, '$1while ($2) {');
+  code = code.replace(/^(\s*)until\s+(.+?)\s*$/gm, '$1while (!($2)) {');
+  code = code.replace(/^(\s*)repeat\s+(\d+)\s+times\s*$/gm, '$1for (let __krs_i = 0; __krs_i < $2; __krs_i++) {');
+  code = code.replace(/^(\s*)repeat\s+(.+?)\s+times\s*$/gm, '$1for (let __krs_i = 0; __krs_i < $2; __krs_i++) {');
   return code;
 }
 
