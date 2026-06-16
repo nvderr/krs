@@ -49,6 +49,8 @@ Run `krs list stdlib` for the full list.
 |--------|-------------|
 | `cli` | CLI args |
 | `test` | Unit tests |
+| `regex` | Regular expressions |
+| `result` | Ok/Err helpers |
 
 ## Community packages
 
