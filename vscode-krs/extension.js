@@ -5,11 +5,13 @@ const KEYWORDS = [
   'return', 'class', 'extends', 'export', 'default', 'use', 'loadAll', 'async', 'await',
   'try', 'catch', 'finally', 'throw', 'break', 'continue', 'enum', 'switch', 'case',
   'unless', 'and', 'or', 'not', 'true', 'false', 'null', 'self',
+  'repeat', 'times', 'until', 'guard', 'else',
 ];
 
 const STDLIB = [
   'log', 'env', 'discord', 'http', 'fs', 'db', 'cli', 'utils', 'json',
   'path', 'crypto', 'math', 'string', 'array', 'colors', 'process', 'test',
+  'regex', 'result',
 ];
 
 const SNIPPETS = {
@@ -17,6 +19,10 @@ const SNIPPETS = {
   'fn return': 'fn ${1:name}(${2:args}) return ${3:expr}',
   if: 'if ${1:cond} then\n\t$0\nend',
   'for each': 'for each ${1:item} in ${2:list}\n\t$0\nend',
+  'repeat times': 'repeat ${1:5} times\n\t$0\nend',
+  'until': 'until ${1:done}\n\t$0\nend',
+  'guard': 'guard ${1:condition} else return ${2:Err("error")} end',
+  'use stdlib': 'use stdlib.${1:log}',
   class: 'class ${1:Name} {\n\tfn init(${2:args}) {\n\t\t$0\n\t}\n}',
   use: 'use "@stdlib/${1:log}.krs"',
   'use krs': 'use "krs:${1:colors}"',
