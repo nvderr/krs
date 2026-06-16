@@ -1,0 +1,65 @@
+export fn render(rows, columns = null) {
+  if rows.length == 0 then return "" end
+
+  let cols = columns
+  if cols == null then
+    cols = Object.keys(rows[0])
+  end
+
+  let widths = {}
+  for each col in cols
+    widths[col] = col.length
+  end
+
+  for each row in rows
+    for each col in cols
+      let val = String(row[col] ?? "")
+      if val.length > widths[col] then
+        widths[col] = val.length
+      end
+    end
+  end
+
+  let sep = "+" + join(map(cols, fn(col) { return repeat("-", widths[col] + 2) }), "+") + "+"
+  let header = "|" + join(map(cols, fn(col) { return " " + pad(col, widths[col]) + " " }), "|") + "|"
+  let lines = [sep, header, sep]
+
+  for each row in rows
+    let line = "|" + join(map(cols, fn(col) { return " " + pad(String(row[col] ?? ""), widths[col]) + " " }), "|") + "|"
+    lines.push(line)
+  end
+  lines.push(sep)
+  return lines.join("\n")
+}
+
+fn map(arr, callback) {
+  let result = []
+  for each item in arr
+    result.push(callback(item))
+  end
+  return result
+}
+
+fn join(arr, sep) {
+  let s = ""
+  for each i in range(0, arr.length)
+    if i > 0 then s = s + sep end
+    s = s + arr[i]
+  end
+  return s
+}
+
+fn pad(text, width) {
+  while text.length < width
+    text = text + " "
+  end
+  return text
+}
+
+fn repeat(char, n) {
+  let s = ""
+  for each i in range(0, n)
+    s = s + char
+  end
+  return s
+}

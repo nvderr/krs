@@ -1,0 +1,12 @@
+export fn red(text) return "\x1b[31m" + text + "\x1b[0m"
+export fn green(text) return "\x1b[32m" + text + "\x1b[0m"
+export fn yellow(text) return "\x1b[33m" + text + "\x1b[0m"
+export fn blue(text) return "\x1b[34m" + text + "\x1b[0m"
+export fn cyan(text) return "\x1b[36m" + text + "\x1b[0m"
+export fn bold(text) return "\x1b[1m" + text + "\x1b[0m"
+export fn dim(text) return "\x1b[2m" + text + "\x1b[0m"
+
+export fn success(text) return green("✓ " + text)
+export fn error(text) return red("✗ " + text)
+export fn warn(text) return yellow("⚠ " + text)
+export fn info(text) return cyan("ℹ " + text)

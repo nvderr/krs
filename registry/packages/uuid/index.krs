@@ -1,0 +1,16 @@
+export fn v4() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, fn(c) {
+    let r = Math.random() * 16 | 0
+    let v = c == "x" ? r : (r & 0x3 | 0x8)
+    return v.toString(16)
+  })
+}
+
+export fn short(length = 8) {
+  let chars = "abcdefghijklmnopqrstuvwxyz0123456789"
+  let id = ""
+  for each i in range(0, length)
+    id = id + chars[Math.floor(Math.random() * chars.length)]
+  end
+  return id
+}

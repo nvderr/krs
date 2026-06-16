@@ -1,0 +1,8 @@
+{
+  "name": "packages-demo",
+  "version": "1.0.0",
+  "dependencies": {
+    "colors": "^1.0.0",
+    "table": "^1.0.0"
+  }
+}

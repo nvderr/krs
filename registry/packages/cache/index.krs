@@ -1,0 +1,21 @@
+export fn create(defaultTtl = 60000) {
+  let store = {}
+
+  return {
+    get: fn(key) {
+      let entry = store[key]
+      if entry == null then return null end
+      if Date.now() > entry.expires then
+        delete store[key]
+        return null
+      end
+      return entry.value
+    },
+    set: fn(key, value, ttl = defaultTtl) {
+      store[key] = { value: value, expires: Date.now() + ttl }
+    },
+    has: fn(key) return get(key) != null,
+    delete: fn(key) delete store[key],
+    clear: fn() store = {}
+  }
+}

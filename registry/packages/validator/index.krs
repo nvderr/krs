@@ -1,0 +1,37 @@
+export fn isEmail(text) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)
+}
+
+export fn isUrl(text) {
+  return /^https?:\/\/.+/.test(text)
+}
+
+export fn isNumber(val) {
+  return typeof val == "number" && !isNaN(val)
+}
+
+export fn minLength(text, n) {
+  return text != null && text.length >= n
+}
+
+export fn required(val) {
+  return val != null && String(val).trim() != ""
+}
+
+export fn validate(rules, data) {
+  let errors = []
+  for each field in Object.keys(rules)
+    let rule = rules[field]
+    let value = data[field]
+    if rule.required && !required(value) then
+      errors.push(field + " is required")
+    end
+    if rule.email && value && !isEmail(value) then
+      errors.push(field + " must be a valid email")
+    end
+    if rule.min && value && value.length < rule.min then
+      errors.push(field + " must be at least " + rule.min + " chars")
+    end
+  end
+  return errors
+}

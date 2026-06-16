@@ -1,0 +1,11 @@
+use "krs:colors"
+use "krs:table"
+
+let users = [
+  { name: "Alice", role: "admin" },
+  { name: "Bob", role: "dev" }
+]
+
+print(colors.success("Packages loaded!"))
+print("")
+print(table.render(users))

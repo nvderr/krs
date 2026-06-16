@@ -1,0 +1,26 @@
+export fn parse(text, delimiter = ",") {
+  let lines = text.trim().split("\n")
+  if lines.length == 0 then return [] end
+  let headers = lines[0].split(delimiter).map(fn h return h.trim())
+  let rows = []
+  for each i in range(1, lines.length)
+    if lines[i].trim() == "" then continue end
+    let values = lines[i].split(delimiter)
+    let row = {}
+    for each j in range(0, headers.length)
+      row[headers[j]] = values[j]?.trim() ?? ""
+    end
+    rows.push(row)
+  end
+  return rows
+}
+
+export fn stringify(rows, delimiter = ",") {
+  if rows.length == 0 then return "" end
+  let headers = Object.keys(rows[0])
+  let lines = [headers.join(delimiter)]
+  for each row in rows
+    lines.push(headers.map(fn h return row[h] ?? "").join(delimiter))
+  end
+  return lines.join("\n")
+}

@@ -1,0 +1,66 @@
+{
+  "registry": "https://registry.krs.dev",
+  "version": "1.0.0",
+  "packages": {
+    "colors": {
+      "version": "1.0.0",
+      "description": "Terminal colors and styling",
+      "keywords": ["cli", "terminal", "ansi"],
+      "local": "colors"
+    },
+    "table": {
+      "version": "1.0.0",
+      "description": "Pretty ASCII tables for CLI output",
+      "keywords": ["cli", "table", "display"],
+      "local": "table"
+    },
+    "validator": {
+      "version": "1.0.0",
+      "description": "Validate emails, URLs, numbers and more",
+      "keywords": ["validation", "forms", "utils"],
+      "local": "validator"
+    },
+    "slug": {
+      "version": "1.0.0",
+      "description": "Convert strings to URL-friendly slugs",
+      "keywords": ["string", "url", "seo"],
+      "local": "slug"
+    },
+    "fetch-plus": {
+      "version": "1.0.0",
+      "description": "HTTP client with retries and timeout",
+      "keywords": ["http", "fetch", "api"],
+      "local": "fetch-plus"
+    },
+    "cache": {
+      "version": "1.0.0",
+      "description": "In-memory TTL cache",
+      "keywords": ["cache", "memory", "performance"],
+      "local": "cache"
+    },
+    "uuid": {
+      "version": "1.0.0",
+      "description": "Generate UUIDs and random IDs",
+      "keywords": ["uuid", "random", "id"],
+      "local": "uuid"
+    },
+    "progress": {
+      "version": "1.0.0",
+      "description": "CLI progress bars and spinners",
+      "keywords": ["cli", "progress", "spinner"],
+      "local": "progress"
+    },
+    "csv": {
+      "version": "1.0.0",
+      "description": "Parse and generate CSV files",
+      "keywords": ["csv", "data", "parse"],
+      "local": "csv"
+    },
+    "markdown": {
+      "version": "1.0.0",
+      "description": "Simple markdown to HTML converter",
+      "keywords": ["markdown", "html", "text"],
+      "local": "markdown"
+    }
+  }
+}

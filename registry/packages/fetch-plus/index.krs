@@ -1,0 +1,33 @@
+export async fn get(url, opts = {}) {
+  return await request(url, { method: "GET", ...opts })
+}
+
+export async fn post(url, body, opts = {}) {
+  return await request(url, { method: "POST", body: body, ...opts })
+}
+
+export async fn request(url, opts = {}) {
+  let retries = opts.retries ?? 3
+  let timeout = opts.timeout ?? 10000
+  let lastError = null
+
+  for each attempt in range(1, retries + 1)
+    try {
+      let res = await fetch(url, {
+        method: opts.method ?? "GET",
+        headers: opts.headers ?? { "Content-Type": "application/json" },
+        body: opts.body ? JSON.stringify(opts.body) : undefined,
+        signal: AbortSignal.timeout(timeout)
+      })
+      return {
+        status: res.status,
+        ok: res.ok,
+        json: async fn() return await res.json(),
+        text: async fn() return await res.text()
+      }
+    } catch (e) {
+      lastError = e
+    }
+  end
+  throw lastError
+}
