@@ -86,6 +86,10 @@ install.bat
 
 Reload VS Code — `.krs` files get colors, autocomplete and snippets.
 
+**On GitHub.com**, `.krs` is not an official language yet. This repo uses [`.gitattributes`](.gitattributes) so GitHub highlights `.krs` files like JavaScript. Full Krs colors work in VS Code/Cursor with the bundled extension.
+
+To register Krs officially on GitHub later: [github/linguist](https://github.com/github/linguist/blob/master/docs/CreatingANewExtension.md).
+
 ## Documentation
 
 - [Syntax reference](docs/SYNTAX.md)
