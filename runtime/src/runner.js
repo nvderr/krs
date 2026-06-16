@@ -88,6 +88,8 @@ async function executeModule(js, exports, __krs, extraScope = {}) {
     return out;
   };
   const __pipe = (val, ...fns) => fns.reduce((v, f) => f(v), val);
+  const Ok = (value) => ({ ok: true, value, isOk: () => true, isErr: () => false });
+  const Err = (error) => ({ ok: false, error, isOk: () => false, isErr: () => true });
 
   const scopeNames = Object.keys(extraScope);
   const scopeValues = scopeNames.map((k) => extraScope[k]);
@@ -110,6 +112,8 @@ async function executeModule(js, exports, __krs, extraScope = {}) {
     'fetch',
     'range',
     '__pipe',
+    'Ok',
+    'Err',
     'AbortSignal',
     ...scopeNames,
     fnBody,
@@ -130,6 +134,8 @@ async function executeModule(js, exports, __krs, extraScope = {}) {
     globalThis.fetch,
     range,
     __pipe,
+    Ok,
+    Err,
     globalThis.AbortSignal,
     ...scopeValues,
   );
