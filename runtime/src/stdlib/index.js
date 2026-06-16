@@ -15,6 +15,8 @@ import * as process from './process.js';
 import * as test from './test.js';
 import * as cli from './cli.js';
 import * as db from './db.js';
+import * as regex from './regex.js';
+import * as result from './result.js';
 
 export const STDLIB_MAP = {
   log,
@@ -34,6 +36,8 @@ export const STDLIB_MAP = {
   test,
   cli,
   db,
+  regex,
+  result,
 };
 
 export function getStdlib(name) {
