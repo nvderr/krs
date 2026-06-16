@@ -1,0 +1,6 @@
+krs_modules/
+node_modules/
+.env
+*.log
+.DS_Store
+Thumbs.db
