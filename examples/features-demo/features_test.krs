@@ -1,0 +1,20 @@
+use stdlib.test
+
+test("Ok result", fn() {
+  let r = Ok(42)
+  expect(r.isOk()).toBeTruthy()
+  expect(r.value).toBe(42)
+})
+
+test("Err result", fn() {
+  let r = Err("fail")
+  expect(r.isErr()).toBeTruthy()
+})
+
+test("guard returns Err", fn() {
+  fn safeDiv(a, b) {
+    guard b != 0 else return Err("zero")
+    return Ok(a / b)
+  }
+  expect(safeDiv(1, 0).isErr()).toBeTruthy()
+})

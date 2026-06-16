@@ -1,0 +1,42 @@
+// Demo: new Krs language features
+
+use stdlib.log as Logger
+use "@stdlib/regex.krs"
+
+let log = Logger.create("demo")
+
+// repeat loop
+repeat 3 times
+  log.info("Repeat loop tick")
+end
+
+// until loop
+let n = 0
+until n >= 3
+  n = n + 1
+end
+log.info("Until loop finished at " + n)
+
+// guard (early return)
+fn divide(a, b) {
+  guard b != 0 else return Err("division by zero")
+  return Ok(a / b)
+}
+
+let result = divide(10, 2)
+if result.isOk() then
+  log.info("10 / 2 = " + result.value)
+end
+
+// regex
+if regex.test("^hello", "hello world") then
+  log.info("Regex match!")
+end
+
+// pipeline
+fn double(x) return x * 2
+fn addOne(x) return x + 1
+let piped = 5 |> double |> addOne
+log.info("Pipeline 5 |> double |> addOne = " + piped)
+
+print("All features OK!")
