@@ -5,9 +5,12 @@ A lightweight, readable programming language (`.krs` files). English syntax, Nod
 ## Features
 
 - Simple syntax: `if … then … end`, `fn`, `for each`, `class`
-- Modules: `use`, `export`, `loadAll`
-- 18 built-in stdlib modules (`@stdlib/...`)
+- Loops: `repeat N times`, `until`, `unless`, `guard`
+- Results: built-in `Ok()` / `Err()`
+- Modules: `use`, `export`, `loadAll`, `use stdlib.log`
+- 20 built-in stdlib modules
 - Package manager: `krs install`
+- CLI: `krs repl`, `krs init`, `krs test`
 - VS Code extension with syntax highlighting + IntelliSense
 
 ## Requirements
@@ -59,6 +62,9 @@ krs/
 | Command | Description |
 |---------|-------------|
 | `krs run file.krs` | Run a script |
+| `krs repl` | Interactive REPL |
+| `krs init [name]` | Create a new project |
+| `krs test [dir]` | Run `*_test.krs` files |
 | `krs install [pkg]` | Install packages |
 | `krs search <word>` | Search registry |
 | `krs list` | Installed packages |
