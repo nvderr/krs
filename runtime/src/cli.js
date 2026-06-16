@@ -1,9 +1,13 @@
+
 import path from 'node:path';
 import { runFile } from './runner.js';
 import { runInstall, runSearch, runList, runRegistryInfo } from './package-manager.js';
 import { listStdlib } from './stdlib/index.js';
+import { startRepl } from './repl.js';
+import { initProject } from './init.js';
+import { runTests } from './test-runner.js';
 
-const VERSION = '0.2.0';
+const VERSION = '0.3.0';
 
 export async function runCli(argv) {
   const args = argv.slice(2);
@@ -22,6 +26,21 @@ export async function runCli(argv) {
     const file = args[1];
     if (!file) throw new Error('Usage: krs run <file.krs>');
     await runFile(path.resolve(process.cwd(), file));
+    return;
+  }
+
+  if (args[0] === 'repl') {
+    await startRepl();
+    return;
+  }
+
+  if (args[0] === 'init') {
+    initProject(args[1] || 'my-app');
+    return;
+  }
+
+  if (args[0] === 'test') {
+    await runTests(args[1] || '.');
     return;
   }
 
@@ -62,19 +81,15 @@ function printHelp() {
   console.log(`Krs runtime v${VERSION}
 
 Usage:
-  krs run <file.krs>       Run a Krs script
-  krs <file.krs>           Shorthand for run
-  krs install [pkg...]     Install packages (or all from krs.json)
-  krs search <keyword>     Search the registry
-  krs list                 List installed packages
-  krs list stdlib          List built-in stdlib modules
-  krs registry             Show registry info
+  krs run <file.krs>       Run a script
+  krs repl                 Interactive REPL
+  krs init [name]          Create a new project
+  krs test [dir]           Run *_test.krs files
+  krs install [pkg...]     Install packages
+  krs search <keyword>     Search registry
+  krs list                 Installed packages
+  krs list stdlib          Built-in modules
   krs --version            Show version
-  krs --help               Show this help
-
-Examples:
-  krs install colors table
-  krs search http
-  use "krs:colors" in your .krs files after install
+  krs --help               Show help
 `);
 }
