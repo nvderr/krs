@@ -1,0 +1,34 @@
+{
+  "name": "krs-language",
+  "displayName": "Krs Language",
+  "description": "Syntax highlighting, IntelliSense and snippets for Krs (.krs)",
+  "version": "0.2.0",
+  "publisher": "krs",
+  "main": "./extension.js",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "activationEvents": ["onLanguage:krs"],
+  "categories": ["Programming Languages"],
+  "contributes": {
+    "languages": [
+      {
+        "id": "krs",
+        "aliases": ["Krs", "krs"],
+        "extensions": [".krs"],
+        "configuration": "./language-configuration.json",
+        "icon": {
+          "light": "./icons/krs-light.svg",
+          "dark": "./icons/krs-dark.svg"
+        }
+      }
+    ],
+    "grammars": [
+      {
+        "language": "krs",
+        "scopeName": "source.krs",
+        "path": "./syntaxes/krs.tmLanguage.json"
+      }
+    ]
+  }
+}
